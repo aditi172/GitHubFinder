@@ -1,37 +1,38 @@
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
+import GithubContext from '../../context/github/githubContext';
+import AlertContext from '../../context/alert/alertContext';
 
-export class Search extends Component {
 
-    state={
-        search:''
+const Search =()=> {
+    const githubContext=useContext(GithubContext);
+    const alertContext= useContext(AlertContext);
+    const [search, setSearch] =useState('');
+    
+    const handleChange=(e)=> {
+        setSearch(e.target.value)
     }
-    handleChange=(e)=> {
-        this.setState({[e.target.id]: e.target.value})
-    }
-    handleSubmit=(e)=> {
+    const handleSubmit=(e)=> {
         e.preventDefault();
-        if(this.state.search==='') {
-            this.props.setAlert("Please enter a Name", 'light')
+        if(search==='') {
+            alertContext.setAlert("Please enter a Name", 'light')
         }
         else {
-            this.props.searchUser(this.state.search);
-            this.setState({search: ''});
+            githubContext.searchUser(search);
+            setSearch('');
             document.getElementById("form").reset();
         }
     }
-    render() {
         return (
             <div>
-                <form id="form" onSubmit={this.handleSubmit}>
-                    <input id="search" type="text" placeholder="Search Users here..." onChange={this.handleChange}></input>
+                <form id="form" onSubmit={handleSubmit}>
+                    <input id="search" type="text" placeholder="Search Users here..." onChange={handleChange}></input>
                     <input type="submit" id="submit" className="btn btn-primary btn-block" value="Search"></input>
                 </form>
-                {this.props.showClear && 
-                    <button className="btn btn-light btn-block" onClick={this.props.clearUser}>Clear</button>
+                {githubContext.users.length>0 && 
+                    <button className="btn btn-light btn-block" onClick={githubContext.clearUser}>Clear</button>
                 }
             </div>
         )
     }
-}
 
 export default Search

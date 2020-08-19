@@ -1,16 +1,19 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import Repos from '../repos/Repos';
+import GithubContext from '../../context/github/githubContext';
 
-export class User extends Component {
+const User=({match})=> {
 
-    componentDidMount() {
-        this.props.getUser(this.props.match.params.login);
-        this.props.getUserRepos(this.props.match.params.login);
-    }
+    const githubContext=useContext(GithubContext);
+    const {loading, user, getUser, repos, getUserRepos}=githubContext;
+    useEffect(()=> {
+        getUser(match.params.login);
+        getUserRepos(match.params.login);
+        // eslint-disable-next-line
+    },[]);
 
-    render() {
         const {
             name,
             avatar_url,
@@ -25,9 +28,7 @@ export class User extends Component {
             public_repos,
             public_gists,
             hireable
-        }=this.props.user;
-
-        const { loading, repos }=this.props;
+        }=user;
 
         // const { repos }= this.props.repos;
 
@@ -90,6 +91,5 @@ export class User extends Component {
             )
         }
     }
-}
 
 export default User
