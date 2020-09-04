@@ -1,0 +1,178 @@
+{
+    "title": "KYC Form",
+    "description": "KYC form using JSON Form schema",
+    "type": "object",
+    "required": [
+      "companyname",
+      "address",
+      "DoI",
+      "Entity",
+      "doctype",
+      "num",
+      "docname"
+    ],
+    "properties": {
+      "companyname": {
+        "type": "string",
+        "title": "Company Name"
+      },
+      "address": {
+        "type": "string",
+        "title": "Address"
+      },
+      "DoI": {
+        "type": "string",
+        "format": "date",
+        "title": "Date of Incorporation"
+      },
+      "Entity": {
+        "type": "string",
+        "enum": [
+          "Public Limited Company",
+          "Private Limited Company",
+          "Patnership Firm",
+          "One Person Company",
+          "Sole Proprietorship"
+        ],
+        "default": "Public Limited Company"
+      }
+    },
+    "dependencies": {
+      "Entity": {
+        "oneOf": [
+          {
+            "properties": {
+              "Entity": {
+                "enum": [
+                  "Public Limited Company"
+                ]
+              },
+              "docname": {
+                "type": "string",
+                "title": "Document Name",
+                "enum": [
+                  "Incorporation Certificate"
+                ]
+              },
+              "doctype": {
+                "type": "string",
+                "file": "string",
+                "format": "data-url",
+                "title": "Upload Incorporation Certificate"
+              },
+              "num": {
+                "type": "string",
+                "title": "CIN",
+                "minLength": 21,
+                "maxLength": 21
+              }
+            }
+          },
+          {
+            "properties": {
+              "Entity": {
+                "enum": [
+                  "Private Limited Company"
+                ]
+              },
+              "docname": {
+                "type": "string",
+                "title": "Document Name",
+                "enum": [
+                  "Incorporation Certificate"
+                ]
+              },
+              "doctype": {
+                "type": "string",
+                "file": "string",
+                "format": "data-url",
+                "title": "Upload Incorporation Certificate"               
+              },
+              "num": {
+                "type": "string",
+                "title": "CIN"
+              }
+            }
+          },
+          {
+            "properties": {
+              "Entity": {
+                "enum": [
+                  "Patnership Firm"
+                ]
+              },
+              "docname": {
+                "type": "string",
+                "title": "Document Name",
+                "enum": [
+                  "Partnership deed"
+                ]
+              },
+              "doctype": {
+                "type": "string",
+                "file": "string",
+                "format": "data-url",
+                "title": "Upload Patnership Deed"
+              },
+              "num": {
+                "type": "string",
+                "title": "Company Pan"
+              }
+            }
+          },
+          {
+            "properties": {
+              "Entity": {
+                "enum": [
+                  "One Person Company"
+                ]
+              },
+              "docname": {
+                "type": "string",
+                "title": "Document Name",
+                "enum": [
+                  "Incorporation Certificate"
+                ]
+              },
+              "doctype": {
+                "type": "string",
+                "file": "string",
+                "format": "data-url",
+                "title": "Upload Incorporation Certificate"
+              },
+              "num": {
+                "type": "string",
+                "title": "CIN"
+              }
+            }
+          },
+          {
+            "properties": {
+              "Entity": {
+                "enum": [
+                  "Sole Proprietorship"
+                ]
+              },
+              "docname": {
+                "type": "string",
+                "title": "Document Name",
+                "enum": [
+                  "Udyog Aadhar Certificate"
+                ]
+              },
+              "doctype": {
+                "type": "string",
+                "file": "string",
+                "format": "data-url",
+                "title": "Upload Udyod/Udyam Aadhar Certificate"
+              },
+              "num": {
+                "type": "string",
+                "title": "UAM Number"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
